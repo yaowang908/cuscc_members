@@ -33,7 +33,7 @@
         }
         wp_enqueue_style('cuscc_members_admin_page_css', plugins_url('plugin_css/cuscc_members_admin_page_css.css',__FILE__));
         wp_enqueue_script('cuscc_members_admin_page_js', plugins_url('plugin_js/cuscc_members_admin_page_js.js',__FILE__));
-        wp_enqueue_script('jquery-3.1.1.min', get_stylesheet_directory_uri() .'/child_js/jquery-3.1.1.min.js',' ',' ',true);
+        //wp_enqueue_script('jquery-3.1.1.min', get_stylesheet_directory_uri() .'/child_js/jquery-3.1.1.min.js',' ',' ',true);
         //wp js API
         wp_enqueue_media();
     }

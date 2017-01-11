@@ -33,24 +33,10 @@
       */
   ?>
     <!--image container, can be manupulated with js-->
-      <div class="cm_slide_img_container">
-          <?php if($you_have_img) :?>
-                <img src="<?php echo $your_img_src[0] ?>" alt="" style="max-width:100%;"/>
-          <?php endif; ?>
-      </div>
+     <button class='open-select-frame'>Open select frame</button> 
       
-      <!--add & remove image links-->
-      <p class="hide-if-no-js">
-          <a class="upload-custom-img <?php if($you_have_img){ echo 'hidden'; }?>" href="<?php echo $upload_link ?>">
-                <?php _e('Set custom image')?>
-          </a> 
-          <a class="delete-custom-img <?php if(!$your_have_img){echo 'hidden';}?>" href="#">
-                <?php _e('Remove this image')?> 
-          </a>
-      </p>
-        
-      <input class="cystom-img-id" name="custom-img-id" type="hidden" value="<?php echo esc_attr($your_img_id);?>"/>
   </div>
+    
   <div class='cm_uploaded_items cm_display_1_grid_mode hide'>
     grid mode looks like this
   </div>
