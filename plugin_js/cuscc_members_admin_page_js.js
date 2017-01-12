@@ -72,7 +72,11 @@
 			// Fires when a user has selected attachment(s) and clicked the select button.
 			// @see media.view.MediaFrame.Post.mainInsertToolbar()
 			frame.on( 'select', function() {
-				var selectionCollection = frame.state().get('selection');
+				var selectionCollection = frame.state().get('selection').first().toJSON();
+                //url = selectionCollection.url
+                //console.log(selectionCollection.url);
+                //$('.cm_display_1_slide_mode').append('<img src="'+selectionCollection.url+'"/>');
+                total_members_array.push(selectionCollection.url);
 			} );
 
 			// Fires when a state activates.

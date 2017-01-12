@@ -9,7 +9,22 @@
     $your_img_src = wp_get_attachment_image_src( $your_img_id, 'full');
 //for convenience, see if the array is valid
     $your_have_img = is_array( $your_img_src);
+
+//store member photo url
+    $total_members_array;
 ?>
+<script>
+    var total_members_array;
+    var total_members_in_db = <?php echo $total_members_array; ?>;
+    if (total_members_array.length()>total_members_in_db.length())
+    {
+        <?php $total_members_array = echo "<script>document.writeln(total_members_array);</script>";
+                    update_option('total_members',$total_members_array);
+        ?>
+    }
+    
+    
+</script>
 <div class='cm_display_item' id='cm_display_1'>
   <div class='cm_select_display_mode'>
     <form action="#" method="post" >
