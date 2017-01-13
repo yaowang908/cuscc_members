@@ -1,5 +1,6 @@
 
 (function($){
+    
 //js select display mode
     $(document).ready(function(){
           $("label").click(function(){
@@ -17,6 +18,8 @@
     });
     
 //upload image
+    var total_members_array=new Array();
+    var total_members_in_db=new Array();
     $(document).ready(function(){
         $('.open-select-frame').on( 'click' , function(){
             //accepts an optional object hash to override default values
@@ -74,9 +77,39 @@
 			frame.on( 'select', function() {
 				var selectionCollection = frame.state().get('selection').first().toJSON();
                 //url = selectionCollection.url
-                //console.log(selectionCollection.url);
+                console.log(selectionCollection.url);
                 //$('.cm_display_1_slide_mode').append('<img src="'+selectionCollection.url+'"/>');
-                total_members_array.push(selectionCollection.url);
+                
+                total_members_array[total_members_array.length] = selectionCollection.url;
+                console.log("total_members_array.length is : "+total_members_array.length);
+                console.log("total_members_in_db.length is : "+total_members_in_db.length);
+                console.log("total_members_in_db is : "+total_members_array);        
+                if (total_members_array.length>total_members_in_db.length){
+                    //have new added image(s)
+                    $.ajax({
+                        type: "POST",
+                        data: total_members_array,
+                        url: "../wp-content/plugins/cuscc_members/cuscc_members_admin_panel_body.php",
+                        dataType:'json',
+                        success: function(){
+                            console.log("send total members update info to POST");
+                        },
+                        error: function (ErrorResponse) {
+                            if (ErrorResponse.statusText == "OK") {
+                                console.log("OK:send total members update info to POST");
+                            }
+                            else {
+                               console.log("ErrorMsg:" + ErrorResponse.statusText);
+                            }
+                         }
+                    });
+                }
+                else{
+                    //dont have new image
+                    
+                }
+                
+                
 			} );
 
 			// Fires when a state activates.
