@@ -81,18 +81,29 @@
                 //$('.cm_display_1_slide_mode').append('<img src="'+selectionCollection.url+'"/>');
                 
                 total_members_array[total_members_array.length] = selectionCollection.url;
+               
+                //>>debug info
                 console.log("total_members_array.length is : "+total_members_array.length);
                 console.log("total_members_in_db.length is : "+total_members_in_db.length);
-                console.log("total_members_in_db is : "+total_members_array);        
+                console.log("total_members_in_db is : "+total_members_array);
+                //get functino php page url
+                var ajax_url = $(location).attr('href').split("?")[0];
+                ajax_url=ajax_url.split('/');
+                ajax_url.pop();
+                ajax_url.pop();
+                ajax_url=ajax_url.join('/');
+                ajax_url += '/wp-content/plugins/cuscc_members/cuscc_ajax.php';
+                console.log("ajax url is : "+ajax_url);
+                //<<debug info
                 if (total_members_array.length>total_members_in_db.length){
                     //have new added image(s)
                     $.ajax({
                         type: "POST",
-                        data: total_members_array,
-                        url: "../wp-content/plugins/cuscc_members/cuscc_members_admin_panel_body.php",
-                        dataType:'json',
-                        success: function(){
+                        data: { post_array: total_members_array[0] },
+                        url: ajax_url,
+                        success: function(result){
                             console.log("send total members update info to POST");
+                            console.log("php got ajax and send back "+result);
                         },
                         error: function (ErrorResponse) {
                             if (ErrorResponse.statusText == "OK") {
