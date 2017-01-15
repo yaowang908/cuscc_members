@@ -1,19 +1,7 @@
 <?php
-   
-    $total_members_array = array();
-    if(get_option('total_members')){
-        $total_members_array = get_option('total_members');
-    }else{
-        
-    }    
-
-    
+       
 ?>
-<script>
-   
-    total_members_in_db = <?php echo $total_members_array; ?>;  
-    total_members_array = total_members_in_db;
-</script>
+
 <div class='cm_display_item' id='cm_display_1'>
   <div class='cm_select_display_mode'>
     <form action="#" method="post" >

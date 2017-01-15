@@ -36,12 +36,35 @@
         //wp_enqueue_script('jquery-3.1.1.min', get_stylesheet_directory_uri() .'/child_js/jquery-3.1.1.min.js',' ',' ',true);
         //wp js API
         wp_enqueue_media();
+        wp_localize_script('cuscc_members_admin_page_js','add_nonce',array(
+            'security_nonce' => wp_create_nonce('nonce_context')
+        ));
     }
     
     add_action('admin_enqueue_scripts', 'cuscc_member_admin_page_css_and_js');
-
-
-
+    
+    //total member ajax callback
+    function total_member_ajax_callback(){
+        //permission check
+        if(isset($_POST['security_check'])&&wp_verify_nonce($_POST['security_sheck'],'nonce_context'))
+            die('Permissions check failed');
+        
+        global $wpdb;
+        $post_array = $_POST['post_array'];
+        $total_members = (get_option('total_members')==false)? array() : get_option('total_members');
+        if(in_array($post_array,$total_members)){
+            //already exit 
+            echo $total_members;
+        }else{
+            //new member
+            array_push($total_members,$post_array);
+            echo json_encode($total_members);
+        }
+        update_option('total_members',$total_members);
+        //echo $post_array;//new member image url
+        wp_die();
+    }
+    add_action('wp_ajax_member_ajax_callback','total_member_ajax_callback');
 
 //php debuger function
 function debug_to_console( $data ) {

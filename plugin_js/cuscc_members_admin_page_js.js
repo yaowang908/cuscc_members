@@ -18,8 +18,7 @@
     });
     
 //upload image
-    var total_members_array=new Array();
-    var total_members_in_db=new Array();
+    var total_members_array;
     $(document).ready(function(){
         $('.open-select-frame').on( 'click' , function(){
             //accepts an optional object hash to override default values
@@ -28,7 +27,7 @@
                 title: 'Select profile background',
                 
                 //enable/disable multiple select
-                multiple: true,
+                multiple: false,
                 
                 //library wordpress query arguments
                 library: {
@@ -80,27 +79,31 @@
                 console.log(selectionCollection.url);
                 //$('.cm_display_1_slide_mode').append('<img src="'+selectionCollection.url+'"/>');
                 
-                total_members_array[total_members_array.length] = selectionCollection.url;
+                total_members_array = selectionCollection.url;
                
                 //>>debug info
-                console.log("total_members_array.length is : "+total_members_array.length);
-                console.log("total_members_in_db.length is : "+total_members_in_db.length);
-                console.log("total_members_in_db is : "+total_members_array);
+                console.log("new member photo url is : "+total_members_array);
                 //get functino php page url
-                var ajax_url = $(location).attr('href').split("?")[0];
-                ajax_url=ajax_url.split('/');
-                ajax_url.pop();
-                ajax_url.pop();
-                ajax_url=ajax_url.join('/');
-                ajax_url += '/wp-content/plugins/cuscc_members/cuscc_ajax.php';
-                console.log("ajax url is : "+ajax_url);
+                //var ajax_url = $(location).attr('href').split("?")[0];
+                //ajax_url=ajax_url.split('/');
+               // ajax_url.pop();
+                //ajax_url.pop();
+                //ajax_url=ajax_url.join('/');
+                //ajax_url += '/wp-content/plugins/cuscc_members/cuscc_ajax.php';
+                console.log("ajax url is : "+ajaxurl);
                 //<<debug info
-                if (total_members_array.length>total_members_in_db.length){
+                if (total_members_array){
                     //have new added image(s)
+                    //wordpress require data.action not empty otherwise return 0
+                    console.log("security nonce is "+add_nonce.security_nonce);
                     $.ajax({
                         type: "POST",
-                        data: { post_array: total_members_array[0] },
-                        url: ajax_url,
+                        data: { 
+                            action: 'member_ajax_callback',
+                            post_array: total_members_array,
+                            security_check: add_nonce.security_nonce
+                        },
+                        url: ajaxurl,
                         success: function(result){
                             console.log("send total members update info to POST");
                             console.log("php got ajax and send back "+result);
