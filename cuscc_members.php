@@ -54,7 +54,7 @@
         $total_members = (get_option('total_members')==false)? array() : get_option('total_members');
         if(in_array($post_array,$total_members)){
             //already exit 
-            echo $total_members;
+            echo json_encode($total_members);
         }else{
             //new member
             array_push($total_members,$post_array);
