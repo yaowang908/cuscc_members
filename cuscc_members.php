@@ -37,7 +37,8 @@
         //wp js API
         wp_enqueue_media();
         wp_localize_script('cuscc_members_admin_page_js','add_nonce',array(
-            'security_nonce' => wp_create_nonce('nonce_context')
+            'security_nonce' => wp_create_nonce('nonce_context'),
+            'delete_nonce' => wp_create_nonce('delete_context')
         ));
     }
     
@@ -45,26 +46,54 @@
     
     //total member ajax callback
     function total_member_ajax_callback(){
-        //permission check
-        if(isset($_POST['security_check'])&&wp_verify_nonce($_POST['security_sheck'],'nonce_context'))
-            die('Permissions check failed');
-        
-        global $wpdb;
-        $post_array = $_POST['post_array'];
-        $total_members = (get_option('total_members')==false)? array() : get_option('total_members');
-        if(in_array($post_array,$total_members)){
-            //already exit 
-            echo json_encode($total_members);
+        //permission check for security
+        if(isset($_POST['security_check'])&&wp_verify_nonce($_POST['security_sheck'], 'nonce_context'))
+        {        
+            global $wpdb;
+            $post_array = $_POST['post_array'];
+            $total_members = (get_option('total_members')==false)? array() : get_option('total_members');
+            if(in_array($post_array,$total_members)){
+                //already exit 
+                echo json_encode($total_members);
+            }else{
+                //new member
+                array_push($total_members,$post_array);
+                echo json_encode($total_members);
+            }
+            update_option('total_members',$total_members);
+            //echo $post_array;//new member image url
+            wp_die();
         }else{
-            //new member
-            array_push($total_members,$post_array);
-            echo json_encode($total_members);
+            die(wp_verify_nonce($_POST['security_sheck'],'nonce_context').'Permissions check failed');
         }
-        update_option('total_members',$total_members);
-        //echo $post_array;//new member image url
-        wp_die();
     }
     add_action('wp_ajax_member_ajax_callback','total_member_ajax_callback');
+
+function member_ajax_delete_item(){
+     //permission check for security
+        if(isset($_POST['todelete_nonce'])&&wp_verify_nonce($_POST['todelete_nonce'], 'delete_context'))
+        
+        {   $delete_item = $_POST['delete_item'];
+            $total_members = (get_option('total_members')==false)? array() : get_option('total_members');
+
+            if(($key = array_search($delete_item, $total_members)) !== false) {
+                unset($total_members[$key]);
+                echo 'success';
+                update_option('total_members',$total_members);
+            }else{
+                //delete item dont exist
+                echo 'item doesn\'t exist';
+            }
+            update_option('total_members',$total_members);
+            //echo $post_array;//new member image url
+            wp_die();
+        }else
+        {die('delete Permissions check failed');}
+}
+
+add_action('wp_ajax_member_ajax_delete_item','member_ajax_delete_item');
+
+
 
 //php debuger function
 function debug_to_console( $data ) {

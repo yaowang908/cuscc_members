@@ -51,4 +51,29 @@ label.checked{
   background-color:#e3e3e3;
   text-align:center;
 }
-
+.cm_display_1_slide_mode{
+    overflow: hidden;
+}
+#members_slide_show_container{
+    height:150px;
+    width:2000px;
+    margin-left:0px;
+    overflow: hidden;
+    position:relative;
+}
+.members_slide_show_item_container{
+    width:200px;
+    height:150px;
+    float:left;
+    display: inline-block;
+    position:relative;
+    margin-left:10px;
+}
+.members_slide_show_item{
+    width:200px;
+    height:150px;
+}
+.members_slide_show_item_buttons{
+    position:absolute;
+    bottom:0;
+}

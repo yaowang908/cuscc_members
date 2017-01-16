@@ -23,10 +23,26 @@
       *     foreach (images as image=>url)
       *         echo <a><img src=image=>url/></a>
       */
+      $total_members = (get_option('total_members')==false)? array() : get_option('total_members');
   ?>
     <!--image container, can be manupulated with js-->
      <button class='open-select-frame'>Open select frame</button> 
-     
+      <div id="members_slide_show_container">
+          <?php 
+                foreach($total_members as $key => $value){
+                    ?>
+          <div class="members_slide_show_item_container">
+                    <img src="<?php echo $value ?>" class="members_slide_show_item" data-index="<?php echo $key ?>" />
+                    <div class="members_slide_show_item_buttons hide">
+                        <button class='change_slide_show_item left'>Change Title</button>
+                        <button class='delete_current_slide_show_item left'>delete</button>
+                    </div>
+          </div>          
+          <?php
+                }
+          ?>
+          <div class="clear"></div>
+      </div>
   </div>
     
   <div class='cm_uploaded_items cm_display_1_grid_mode hide'>

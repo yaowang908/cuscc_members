@@ -107,6 +107,7 @@
                         success: function(result){
                             console.log("send total members update info to POST");
                             console.log("php got ajax and send back "+result);
+                            //location.reload();
                         },
                         error: function (ErrorResponse) {
                             if (ErrorResponse.statusText == "OK") {
@@ -163,6 +164,46 @@
         });
 
     });
+    
+//delete image
+    //show/hide button
+    $(document).ready(function(){
+        $('.members_slide_show_item_container').on('mouseover',function(){
+                $(this).find('.members_slide_show_item_buttons').removeClass('hide').addClass('show');                      
+            }).on('mouseout',function(){
+                $(this).find('.members_slide_show_item_buttons').removeClass('show').addClass('hide');   
+        });
+    });
+    
+    $(document).ready(function(){
+        $('.delete_current_slide_show_item').on('click',function(){
+            var delete_item = $(this).closest('.members_slide_show_item_container').find('.members_slide_show_item').attr('src');
+            
+             $.ajax({
+                        type: "POST",
+                        data: { 
+                            action: 'member_ajax_delete_item',
+                            delete_item: delete_item,
+                            todelete_nonce: add_nonce.delete_nonce
+                        },
+                        url: ajaxurl,
+                        success: function(result){
+                            console.log(result);
+                            //location.reload();
+                        },
+                        error: function (ErrorResponse) {
+                            if (ErrorResponse.statusText == "OK") {
+                                console.log("OK:send total members update info to POST");
+                            }
+                            else {
+                               console.log("ErrorMsg:" + ErrorResponse.statusText);
+                            }
+                         }
+                    });
+            
+        });
+    });
+    
 })(jQuery);
 
 
