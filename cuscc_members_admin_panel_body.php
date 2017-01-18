@@ -28,6 +28,7 @@
     <!--image container, can be manupulated with js-->
      <button class='open-select-frame'>Open select frame</button> 
       <div id="members_slide_show_container">
+          <!--selected images show-->
           <?php 
                 foreach($total_members as $key => $value){
                     ?>

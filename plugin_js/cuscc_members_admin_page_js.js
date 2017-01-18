@@ -99,9 +99,19 @@
                         },
                         url: ajaxurl,
                         success: function(result){
-                            console.log("send total members update info to POST");
-                            console.log("php got ajax and send back "+result);
-                            location.reload();
+                            //console.log("send total members update info to POST");
+                            //console.log("php got ajax and send back "+result);
+                            //location.reload();
+                            //>>>real ajax
+                            var resultToArray = $.parseJSON(result);
+                            //console.log("json to array "+resultToArray);
+                            var $items =  $('#members_slide_show_container');
+                            var $itemIndex = $('.members_slide_show_item_container').length+1;
+                            $items.find('.clear').remove();
+                             $items.append('<div class="members_slide_show_item_container">             <img src="'+resultToArray+'"class="members_slide_show_item" data-index="'+$itemIndex+'"/><div class="members_slide_show_item_buttons hide">                        <button class="change_slide_show_item left">Change Title</button><button class="delete_current_slide_show_item left">delete</button></div></div>');
+                            $items.append('<div class="clear"></div>');
+                           
+                        
                         },
                         error: function (ErrorResponse) {
                             if (ErrorResponse.statusText == "OK") {
@@ -153,7 +163,7 @@
 			// Open the modal.
 			frame.open();
             
-            console.log('inside click function');
+            //console.log('inside click function');
             
         });
 
@@ -172,7 +182,7 @@
     $(document).ready(function(){
         $('.delete_current_slide_show_item').on('click',function(){
             var delete_item = $(this).closest('.members_slide_show_item_container').find('.members_slide_show_item').attr('src');
-            
+            var delete_item_data_index = $(this).closest('.members_slide_show_item_container').find('.members_slide_show_item').attr('data-index');
              $.ajax({
                         type: "POST",
                         data: { 
@@ -182,8 +192,10 @@
                         },
                         url: ajaxurl,
                         success: function(result){
-                            console.log(result);
-                            location.reload();
+                            //console.log(result);
+                            //location.reload();
+                            $('img[data-index='+delete_item_data_index+']')
+                               .closest('.members_slide_show_item_container').remove();
                         },
                         error: function (ErrorResponse) {
                             if (ErrorResponse.statusText == "OK") {

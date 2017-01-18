@@ -54,11 +54,11 @@
             $total_members = (get_option('total_members')==false)? array() : get_option('total_members');
             if(in_array($post_array,$total_members)){
                 //already exit 
-                echo json_encode($total_members);
+                //echo json_encode($total_members);
             }else{
                 //new member
                 array_push($total_members,$post_array);
-                echo json_encode($total_members);
+                echo json_encode($post_array);
             }
             update_option('total_members',$total_members);
             //must have die() otherwise return 0
