@@ -37,7 +37,7 @@
         //wp js API
         wp_enqueue_media();
         wp_localize_script('cuscc_members_admin_page_js','add_nonce',array(
-            'security_nonce' => wp_create_nonce('nonce_context'),
+            'additem_nonce' => wp_create_nonce('add_context'),
             'delete_nonce' => wp_create_nonce('delete_context')
         ));
     }
@@ -47,7 +47,7 @@
     //total member ajax callback
     function total_member_ajax_callback(){
         //permission check for security
-        if(isset($_POST['security_check'])&&wp_verify_nonce($_POST['security_sheck'], 'nonce_context'))
+        if(isset($_POST['toadditem_nonce'])&&wp_verify_nonce($_POST['toadditem_nonce'], 'add_context'))
         {        
             global $wpdb;
             $post_array = $_POST['post_array'];
@@ -65,8 +65,9 @@
             wp_die();
             
         }else{
-            
-            die(wp_verify_nonce($_POST['security_sheck'],'nonce_context').'Permissions check failed');
+
+            die(wp_verify_nonce($_POST['toadditem_nonce'],'add_context').'Permissions check failed');
+
         }
     }
     add_action('wp_ajax_member_ajax_callback','total_member_ajax_callback');

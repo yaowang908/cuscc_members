@@ -95,13 +95,13 @@
                         data: { 
                             action: 'member_ajax_callback',
                             post_array: total_members_array,
-                            security_check: add_nonce.security_nonce
+                            toadditem_nonce: add_nonce.additem_nonce
                         },
                         url: ajaxurl,
                         success: function(result){
                             console.log("send total members update info to POST");
                             console.log("php got ajax and send back "+result);
-                            //location.reload();
+                            location.reload();
                         },
                         error: function (ErrorResponse) {
                             if (ErrorResponse.statusText == "OK") {
@@ -183,7 +183,7 @@
                         url: ajaxurl,
                         success: function(result){
                             console.log(result);
-                            //location.reload();
+                            location.reload();
                         },
                         error: function (ErrorResponse) {
                             if (ErrorResponse.statusText == "OK") {
