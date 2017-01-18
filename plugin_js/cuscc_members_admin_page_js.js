@@ -76,26 +76,20 @@
 			frame.on( 'select', function() {
 				var selectionCollection = frame.state().get('selection').first().toJSON();
                 //url = selectionCollection.url
-                console.log(selectionCollection.url);
-                //$('.cm_display_1_slide_mode').append('<img src="'+selectionCollection.url+'"/>');
-                
+                //console.log(selectionCollection.url);
+                //selectionCollection.url selected image url                
                 total_members_array = selectionCollection.url;
                
                 //>>debug info
-                console.log("new member photo url is : "+total_members_array);
-                //get functino php page url
-                //var ajax_url = $(location).attr('href').split("?")[0];
-                //ajax_url=ajax_url.split('/');
-               // ajax_url.pop();
-                //ajax_url.pop();
-                //ajax_url=ajax_url.join('/');
-                //ajax_url += '/wp-content/plugins/cuscc_members/cuscc_ajax.php';
-                console.log("ajax url is : "+ajaxurl);
+                //console.log("new member photo url is : "+total_members_array);
+                //pass ajax to wp_ajax handling file url = ajaxurl
+                //console.log("ajax url is : "+ajaxurl);
                 //<<debug info
+                
                 if (total_members_array){
                     //have new added image(s)
                     //wordpress require data.action not empty otherwise return 0
-                    console.log("security nonce is "+add_nonce.security_nonce);
+                    //console.log("security nonce is "+add_nonce.security_nonce);
                     $.ajax({
                         type: "POST",
                         data: { 

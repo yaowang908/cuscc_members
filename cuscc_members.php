@@ -61,9 +61,11 @@
                 echo json_encode($total_members);
             }
             update_option('total_members',$total_members);
-            //echo $post_array;//new member image url
+            //must have die() otherwise return 0
             wp_die();
+            
         }else{
+            
             die(wp_verify_nonce($_POST['security_sheck'],'nonce_context').'Permissions check failed');
         }
     }
