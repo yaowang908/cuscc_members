@@ -214,6 +214,7 @@
  
 //last or next image
     $(document).ready(function(){
+        displayedMemberAmount = $('.members_slide_show_item_container').length;
         var $container = $('.cm_display_1_slide_mode');
         var $itemsContainer = $('#members_slide_show_container');
         $container.append('<div class="pagination_btn last_item_btn">&lt;</div>');
@@ -226,7 +227,7 @@
                 
         var itemsContainerPositionCount = 0;
         var $lastBtnState =0;
-         var $nextBtnState = 1;
+        var $nextBtnState = 1;
         $lastBtn.on('click',function(){
             
             if(itemsContainerPositionCount > 0 ){
@@ -246,12 +247,12 @@
         });
         $nextBtn.on('click',function(){
            
-            if((displayedMemberAmount-itemsContainerPositionCount)>=4){
+            if((displayedMemberAmount-itemsContainerPositionCount)>4){
                 $itemsContainer.animate({left: "-=210"},1000,function(){
                      $itemsContainer.css('margin-left','-= 210');
                 });
                 itemsContainerPositionCount +=1;
-            }else if((displayedMemberAmount-itemsContainerPositionCount)<4 && $nextBtnState){
+            }else if((displayedMemberAmount-itemsContainerPositionCount)==4 && $nextBtnState){
                 //alert('$nextBtn the end');
                 $itemsContainer.animate({left: "-=40"},1000,function(){
                      $itemsContainer.css('margin-left','-= 40');
@@ -259,7 +260,7 @@
                 $nextBtnState = 0;
                 $lastBtnState = 1;
             }else{
-                alert('nextBtn the end');
+                alert('nextBtn the end.'+'displayedMemberAmount:'+displayedMemberAmount+'itemsContainerPositionCount:'+itemsContainerPositionCount);
             }
         });
     });
