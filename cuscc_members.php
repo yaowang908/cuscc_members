@@ -44,6 +44,18 @@
     
     add_action('admin_enqueue_scripts', 'cuscc_member_admin_page_css_and_js');
     
+    //add front page css and js
+    function front_page_scripts_method(){
+        //echo "Does this output to the actual page?";
+       
+        wp_enqueue_style('cuscc_members_front_css123', plugins_url('plugin_css/cuscc_members_front_page_css.css',__FILE__));
+        wp_enqueue_script('cuscc_members_front_js123', plugins_url('plugin_js/cuscc_members_front_page_js.js',__FILE__));
+        
+    }
+
+    add_action('wp_enqueue_scripts', 'front_page_scripts_method',99);
+    //debug_to_console(plugins_url('plugin_css/cuscc_members_front_page_css.css',__FILE__));
+
     //total member ajax callback
     function total_member_ajax_callback(){
         //permission check for security
@@ -96,8 +108,23 @@ function member_ajax_delete_item(){
 
 add_action('wp_ajax_member_ajax_delete_item','member_ajax_delete_item');
 
+//shortcode for lastest member
+function add_shortcode_members($atts){
+    $total_members = (get_option('total_members')==false)? array() : get_option('total_members');
+    ob_start();
+            echo '<div id="members_slide_show_container">';
+            foreach($total_members as $key => $value){
+                    
+              echo '<div class="members_slide_show_item_container">';
+              echo '<img src="'.$value.'" class="members_slide_show_item" data-index="'.$key.'"/>';
+              echo '</div>';          
+          
+                }
+            echo '</div>';
+    return ob_get_clean();
+}
 
-
+add_shortcode('lastest_members','add_shortcode_members');
 //php debuger function
 function debug_to_console( $data ) {
 
