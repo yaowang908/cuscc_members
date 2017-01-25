@@ -18,7 +18,7 @@
     });
     
 //upload image
-    var total_members_array;
+    var total_members_array={};
     $(document).ready(function(){
         $('.open-select-frame').on( 'click' , function(){
             //accepts an optional object hash to override default values
@@ -47,7 +47,7 @@
                 },
                 
                 button:{
-                        text: 'Set profile background'
+                        text: 'Upload member logo'
                 }
             });
             
@@ -76,10 +76,17 @@
 			frame.on( 'select', function() {
 				var selectionCollection = frame.state().get('selection').first().toJSON();
                 //url = selectionCollection.url
-                //console.log(selectionCollection.url);
-                //selectionCollection.url selected image url                
-                total_members_array = selectionCollection.url;
-               
+                var object = {};
+                //selectionCollection.url selected image url       
+               // object.url = selectionCollection.url;
+                //object.website = selectionCollection.description;
+                //object.companyname = selectionCollection.caption;
+                //total_members_array.push(object);
+                total_members_array.url = selectionCollection.url;;
+                total_members_array.website = selectionCollection.description;
+                total_members_array.companyname = selectionCollection.caption;
+                console.log(total_members_array);
+                
                 //>>debug info
                 //console.log("new member photo url is : "+total_members_array);
                 //pass ajax to wp_ajax handling file url = ajaxurl
@@ -104,11 +111,15 @@
                             //location.reload();
                             //>>>real ajax
                             var resultToArray = $.parseJSON(result);
-                            //console.log("json to array "+resultToArray);
+                            //console.log("json to array "+resultToArray.url);
+                            var $companyname = resultToArray.companyname?resultToArray.companyname:"";
+                            var $url = resultToArray.url?resultToArray.url:"";
+                            var $website = resultToArray.website?resultToArray.website:"";
+                            
                             var $items =  $('#members_slide_show_container');
                             var $itemIndex = $('.members_slide_show_item_container').length+1;
                             $items.find('.clear').remove();
-                             $items.append('<div class="members_slide_show_item_container">             <img src="'+resultToArray+'"class="members_slide_show_item" data-index="'+$itemIndex+'"/><div class="members_slide_show_item_buttons hide">                        <button class="change_slide_show_item left">Change Title</button><button class="delete_current_slide_show_item left">delete</button></div></div>');
+                             $items.append('<div class="members_slide_show_item_container"><a href="'+$website+'" target="_blank"><img src="'+$url+'"class="members_slide_show_item" data-index="'+$itemIndex+'"/></a><div class="members_slide_show_item_buttons hide"> <button class="change_slide_show_item left">Change Title</button><button class="delete_current_slide_show_item left">delete</button></div><div class="member_company_name">'+$companyname+'</div></div>');
                             $items.append('<div class="clear"></div>');
                             displayedMemberAmount = $itemIndex;
                             slideContainerWidth = $itemIndex * 210;

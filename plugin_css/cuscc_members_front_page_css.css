@@ -1,3 +1,11 @@
+#cuscc_latest_members_post{
+    width:800px;
+    height:200px;
+    margin-top: 70px;
+    margin-left:20px;
+    overflow: hidden;
+    position: relative;
+}
 #members_slide_show_container{
     height:150px;
     width:2100px;

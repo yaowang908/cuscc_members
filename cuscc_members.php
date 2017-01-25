@@ -47,7 +47,7 @@
     //add front page css and js
     function front_page_scripts_method(){
         //echo "Does this output to the actual page?";
-       
+       //echo plugins_url('plugin_js/cuscc_members_front_page_js.js',__FILE__);
         wp_enqueue_style('cuscc_members_front_css123', plugins_url('plugin_css/cuscc_members_front_page_css.css',__FILE__));
         wp_enqueue_script('cuscc_members_front_js123', plugins_url('plugin_js/cuscc_members_front_page_js.js',__FILE__));
         
@@ -55,7 +55,8 @@
 
     add_action('wp_enqueue_scripts', 'front_page_scripts_method',99);
     //debug_to_console(plugins_url('plugin_css/cuscc_members_front_page_css.css',__FILE__));
-
+    
+    //delete_option('total_members');
     //total member ajax callback
     function total_member_ajax_callback(){
         //permission check for security
@@ -63,6 +64,7 @@
         {        
             global $wpdb;
             $post_array = $_POST['post_array'];
+            
             $total_members = (get_option('total_members')==false)? array() : get_option('total_members');
             if(in_array($post_array,$total_members)){
                 //already exit 
@@ -70,6 +72,8 @@
             }else{
                 //new member
                 array_push($total_members,$post_array);
+                
+                //$total_members[$post_array.companyname] = $post_array;
                 echo json_encode($post_array);
             }
             update_option('total_members',$total_members);
