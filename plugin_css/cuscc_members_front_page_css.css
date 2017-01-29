@@ -7,7 +7,7 @@
     position: relative;
 }
 #members_slide_show_container{
-    height:150px;
+    height:180px;
     width:2100px;
     margin-left:0px;
     overflow: hidden;
@@ -20,6 +20,10 @@
     display: inline-block;
     position:relative;
     margin-left:10px;
+}
+.members_slide_show_item_container p{
+    text-align: center;
+    font-size: 15px;
 }
 .members_slide_show_item{
     width:200px;

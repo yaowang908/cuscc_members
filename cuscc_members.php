@@ -63,19 +63,26 @@
         if(isset($_POST['toadditem_nonce'])&&wp_verify_nonce($_POST['toadditem_nonce'], 'add_context'))
         {        
             global $wpdb;
-            $post_array = $_POST['post_array'];
-            
+            $post_array_url = $_POST['post_array_url'];
+            $post_array_website = $_POST['post_array_website'];
+            $post_array_companyname = $_POST['post_array_companyname'];
+            //debug_to_console($_POST['post_array'][url]);
             $total_members = (get_option('total_members')==false)? array() : get_option('total_members');
-            if(in_array($post_array,$total_members)){
+            $this_member = (get_option($post_array_companyname)==false)? array() : get_option($post_array_companyname);
+            //this_member array(0=>url,1=>companyname,2=>website)
+            if(in_array($post_array_url,$total_members)){
                 //already exit 
                 //echo json_encode($total_members);
+                
             }else{
                 //new member
-                array_push($total_members,$post_array);
-                
+                array_push($total_members,$post_array_companyname);
+                $json_array = array('url'=>$post_array_url,'website'=>$post_array_website,'companyname'=>$post_array_companyname);
                 //$total_members[$post_array.companyname] = $post_array;
-                echo json_encode($post_array);
+                echo json_encode($json_array);
             }
+            $this_member = array($post_array_url,$post_array_companyname,$post_array_website);
+            update_option($post_array_companyname,$this_member);
             update_option('total_members',$total_members);
             //must have die() otherwise return 0
             wp_die();
@@ -118,9 +125,10 @@ function add_shortcode_members($atts){
     ob_start();
             echo '<div id="members_slide_show_container">';
             foreach($total_members as $key => $value){
-                    
+              $this_item = (get_option($value)==false)? array() : get_option($value);      
               echo '<div class="members_slide_show_item_container">';
-              echo '<img src="'.$value.'" class="members_slide_show_item" data-index="'.$key.'"/>';
+              echo '<a target="_blank" href="'.$this_item[2].'"><img src="'.$this_item[0].'" class="members_slide_show_item" data-index="'.$key.'" /></a>';
+              echo '<p class="members_slide_show_item_companyname">'.$this_item[1].'</p>';
               echo '</div>';          
           
                 }

@@ -30,16 +30,22 @@
       <div id="members_slide_show_container">
           <!--selected images show-->
           <?php 
-          echo $total_members[1];
-                foreach($total_members as $key => $value){
-                    ?>
-          <div class="members_slide_show_item_container">
-                    <img src="<?php echo $value ?>" class="members_slide_show_item" data-index="<?php echo $key ?>" />
-                    <div class="members_slide_show_item_buttons hide">
-                        <button class='change_slide_show_item left'>Change Title</button>
-                        <button class='delete_current_slide_show_item left'>delete</button>
-                    </div>
-          </div>          
+          
+          //$this_item2 = (get_option($total_members[0])==false)? array() : get_option($total_members[0]);
+          //echo $this_item2[2];
+          
+            foreach($total_members as $key => $value){
+                $this_item = (get_option($value)==false)? array() : get_option($value);
+                //$this_member[0] = url 1= companyname [2] = website
+                ?>
+                  <div class="members_slide_show_item_container">
+                        <a target="_blank" href="<?php echo $this_item[2] ?>"><img src="<?php echo $this_item[0] ?>" class="members_slide_show_item" data-index="<?php echo $key ?>" data-companyname ="<?php echo $this_item[1] ?>" /></a>
+                        <div class="members_slide_show_item_buttons hide">
+                            <p class="members_slide_show_item_companyname"><?php echo $this_item[1] ?></p>
+                            <button class='change_slide_show_item left'>Change Title</button>
+                            <button class='delete_current_slide_show_item left'>delete</button>
+                        </div>
+                  </div>          
           <?php
                 }
           ?>

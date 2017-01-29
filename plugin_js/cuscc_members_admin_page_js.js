@@ -101,7 +101,9 @@
                         type: "POST",
                         data: { 
                             action: 'member_ajax_callback',
-                            post_array: total_members_array,
+                            post_array_url: total_members_array.url,
+                            post_array_website: total_members_array.website,
+                            post_array_companyname: total_members_array.companyname,
                             toadditem_nonce: add_nonce.additem_nonce
                         },
                         url: ajaxurl,
@@ -111,7 +113,7 @@
                             //location.reload();
                             //>>>real ajax
                             var resultToArray = $.parseJSON(result);
-                            //console.log("json to array "+resultToArray.url);
+                            console.log("json to array "+resultToArray.url);
                             var $companyname = resultToArray.companyname?resultToArray.companyname:"";
                             var $url = resultToArray.url?resultToArray.url:"";
                             var $website = resultToArray.website?resultToArray.website:"";
@@ -182,6 +184,14 @@
 
     });
     
+    //change image title
+    $(document).ready(function(){
+        $(".change_slide_show_item").on("click",function(){
+            var item_url = $(this).closest(".members_slide_show_item_container").find("img").attr("src");
+            console.log(item_url);
+        });
+    });
+    
 //delete image
     //show/hide button
     $(document).ready(function(){
@@ -194,7 +204,7 @@
     
     $(document).ready(function(){
         $('.delete_current_slide_show_item').on('click',function(){
-            var delete_item = $(this).closest('.members_slide_show_item_container').find('.members_slide_show_item').attr('src');
+            var delete_item = $(this).closest('.members_slide_show_item_container').find('.members_slide_show_item').attr('data-companyname');
             var delete_item_data_index = $(this).closest('.members_slide_show_item_container').find('.members_slide_show_item').attr('data-index');
              $.ajax({
                         type: "POST",
