@@ -70,7 +70,7 @@
             $total_members = (get_option('total_members')==false)? array() : get_option('total_members');
             $this_member = (get_option($post_array_companyname)==false)? array() : get_option($post_array_companyname);
             //this_member array(0=>url,1=>companyname,2=>website)
-            if(in_array($post_array_url,$total_members)){
+            if(in_array($post_array_companyname,$total_members)){
                 //already exit 
                 //echo json_encode($total_members);
                 
